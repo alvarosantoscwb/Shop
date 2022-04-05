@@ -1,11 +1,19 @@
-<template class="flex flex-center">
-  <div class="bg-white shadow-2"></div>
+<template>
+  <q-page class="bg-grey-4">
+    <div
+      class="bg-white shadow-2 q-pa-lg q-gutter-lg"
+      style="display: flex; flex-wrap: wrap"
+    >
+      <ShopItem v-for="item in itens" :key="item.id" :item="item" />
+    </div>
+  </q-page>
 </template>
 
 <script>
+import { defineComponent } from "@vue/runtime-core";
 import ShopItem from "../components/ShopItem.vue";
-export default {
-  name: "Loja",
+export default defineComponent({
+  name: "IndexPage",
   components: {
     ShopItem,
   },
@@ -71,5 +79,5 @@ export default {
       ],
     };
   },
-};
+});
 </script>
