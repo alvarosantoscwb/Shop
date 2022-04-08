@@ -1,17 +1,10 @@
 <template>
   <div
-    class="bg-white shadow-2 q-pa-lg"
-    style="text-align: center; width: 400px"
+    class="bg-white shadow-2 q-pa-sm"
+    style="text-align: center; width: 390px"
   >
     <img style="height: 250px" :src="imgItem" />
-    <div
-      style="
-        text-align: start;
-        font-size: 20px;
-        inline-size: max-content;
-        text-overflow: ellipsis;
-      "
-    >
+    <div style="text-align: start; font-size: 20px" class="ellipsis">
       {{ item.nome }}
     </div>
     <div
@@ -20,13 +13,10 @@
     >
       De: R${{ precoOriginal }}
     </div>
-    <div v-if="precoLabel" style="text-align: left">
-      Preço: R$ {{ precoLabel }}
-    </div>
     <div v-if="precoCalculado" style="text-align: left">
-      Por: R${{ precoCalculado }}
+      {{ precoLabel }}: R${{ precoCalculado }}
     </div>
-    <div style="text-align: left" v-else>Produto indisponível</div>
+    <div v-else style="text-align: left">Produto indisponível</div>
   </div>
 </template>
 <script>
@@ -46,19 +36,32 @@ export default defineComponent({
         "https://m.media-amazon.com/images/I/41I-kHZbEaL._AC_UL320_.jpg"
       );
     },
-    precoLabel() {},
-    precoOriginal() {
-      // se não tiver De: retorna nada
-      return this.item.descontoValor ?? this.item.preco;
+    precoLabel() {
+      if (!this.item.descontoPorCento) return "Preço";
+      this.item.descontoPorCento;
+      return "Por";
     },
-    // se tiver desconto retorna valor original
+    precoOriginal() {
+      // se tiver desconto retorna valor original
+      if (this.item.descontoPorCento || this.item.descontoValor) {
+        return this.item.preco;
+      }
+      // se não tiver desconto retorna nada
+      return "";
+    },
     precoCalculado() {
       // se tiver desconto por cento calcular porcentagem
-      this.descontoPorCento =
-        Math.round(this.item.descontoPorCento * this.item.preco) / 100;
+      if (this.item.descontoPorCento) {
+        return (
+          this.item.preco - (this.item.descontoPorCento * this.item.preco) / 100
+        );
+      }
       // se tiver descontoValor retorna
-      return this.descontoPorCento ?? this.item.preco;
+      if (this.item.descontoValor) {
+        return this.item.descontoValor;
+      }
       // se não tiver desconto retorna valor original
+      return this.item.preco;
     },
   },
 });
