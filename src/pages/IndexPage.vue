@@ -1,8 +1,16 @@
 <template>
-  <q-page class="bg-grey-3 q-ma-xs flex flex-center">
+  <q-page class="bg-grey-4 q-ma-xs q-pl-xl q-pr-lg flex flex-center">
     <q-spinner v-if="loading" size="50px"></q-spinner>
-    <div class="bg-white q-ma-xl">
-      <div class="q-gutter-lg bg-white" style="display: flex; flex-wrap: wrap">
+    <div class="q-ma-xl">
+      <div
+        class="q-gutter-lg q-mt-lg bg-white q-pl-xs"
+        style="
+          display: flex;
+          margin-top: -50px;
+          flex-wrap: wrap;
+          flex: flex-center;
+        "
+      >
         <ShopItem v-for="item in itens" :key="item.id" :item="item" />
       </div>
     </div>

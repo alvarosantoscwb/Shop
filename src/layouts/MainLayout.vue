@@ -10,6 +10,21 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
+        <q-space></q-space>
+        <q-btn flat stretch icon="mdi-cart" style="margin-top: 5px" label="">
+          <q-badge color="red" style="margin-bottom: 30px">{{
+            incrementar
+          }}</q-badge>
+          <q-menu>
+            <div class="bg-white q-pa-md">
+              <div style="">SEU CARRINHO</div>
+              <q-btn flat stretch icon="mdi-minus" @click="diminuir" label="">
+              </q-btn>
+              <q-btn flat stretch icon="mdi-plus" @click="incrementar"></q-btn>
+              <div style="text-align: center">{{ incrementar }}</div>
+            </div>
+          </q-menu>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -34,6 +49,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
+import { mapState } from "vuex";
 
 const linksList = [
   {
@@ -85,6 +101,10 @@ export default defineComponent({
 
   components: {
     EssentialLink,
+  },
+
+  computed: {
+    ...mapState("store", ["incrementar", "diminuir", "adicionar"]),
   },
 
   setup() {

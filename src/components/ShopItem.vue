@@ -1,22 +1,37 @@
 <template>
   <div
-    class="bg-white shadow-2 q-pa-sm"
-    style="text-align: center; width: 390px"
+    class="bg-white shadow-2 q-pl-xs q-pb-lg"
+    style="text-align: center; width: 365px"
   >
     <img style="height: 250px" :src="imgItem" />
-    <div style="text-align: start; font-size: 20px" class="ellipsis">
+    <div style="text-align: start; font-size: 20px" class="ellipsis q-pa-xs">
       {{ item.nome }}
     </div>
     <div
       v-if="precoOriginal"
-      style="text-align: left; text-decoration: line-through; color: grey"
+      style="
+        text-align: left;
+        text-decoration: line-through;
+        color: grey;
+        padding-left: 5px;
+      "
     >
       De: R${{ precoOriginal }}
     </div>
-    <div v-if="precoCalculado" style="text-align: left">
+    <div v-if="precoCalculado" style="text-align: left; padding-left: 5px">
       {{ precoLabel }}: R${{ precoCalculado }}
     </div>
-    <div v-else style="text-align: left">Produto indisponível</div>
+    <div v-else style="text-align: left; padding-left: 5px">
+      Produto indisponível
+    </div>
+    <q-btn
+      class="q-pa-sm q-pr-lg"
+      color="deep-orange"
+      style="align-itens: center; margin-top: 25px"
+      glossy
+      :@click="adicionarAoCarrinho"
+      label="Adicionar ao carrinho"
+    />{{ adicionarAoCarrinho }}
   </div>
 </template>
 <script>
@@ -52,9 +67,7 @@ export default defineComponent({
     precoCalculado() {
       // se tiver desconto por cento calcular porcentagem
       if (this.item.descontoPorCento) {
-        return (
-          this.item.preco - (this.item.descontoPorCento * this.item.preco) / 100
-        );
+        return Math.round(this.item.descontoPorCento * this.item.preco) / 100;
       }
       // se tiver descontoValor retorna
       if (this.item.descontoValor) {
