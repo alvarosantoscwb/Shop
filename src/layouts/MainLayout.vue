@@ -13,15 +13,46 @@
         <q-space></q-space>
         <q-btn flat stretch icon="mdi-cart" style="margin-top: 5px" label="">
           <q-badge color="red" style="margin-bottom: 30px">{{
-            incrementar
+            quantidadeItensCarrinho
           }}</q-badge>
           <q-menu>
-            <div class="bg-white q-pa-md">
-              <div style="">SEU CARRINHO</div>
-              <q-btn flat stretch icon="mdi-minus" @click="diminuir" label="">
-              </q-btn>
-              <q-btn flat stretch icon="mdi-plus" @click="incrementar"></q-btn>
-              <div style="text-align: center">{{ incrementar }}</div>
+            <div class="bg-white q-pa-md" style="height: 400px; width: 400px">
+              <div style="text-align: center; border-bottom: inset">
+                Carrinho de compras
+                <q-item
+                  v-for="item in carrinho"
+                  :key="item.id"
+                  style="margin-left: -25px; border-bottom: inset"
+                >
+                  <img style="width: 60px" :src="item.img" />
+                  <q-item-section class="ellipsis">{{
+                    item.id
+                  }}</q-item-section>
+                  <q-item-section>{{ quantidadeItensCarrinho }}</q-item-section>
+                  <q-btn
+                    flat
+                    stretch
+                    style="font-size: 10px"
+                    icon="mdi-minus"
+                    @click="$store.dispatch('store/diminuirNoCarrinho')"
+                  >
+                  </q-btn>
+                  <q-btn
+                    flat
+                    stretch
+                    style="font-size: 10px"
+                    icon="mdi-plus"
+                    @click="$store.dispatch('store/incrementarNoCarrinho')"
+                  ></q-btn>
+                  <q-btn
+                    flat
+                    stretch
+                    style="font-size: 10px"
+                    icon="mdi-delete"
+                    @click="$store.dispatch('store/RemoverDoCarrinho')"
+                  ></q-btn>
+                </q-item>
+              </div>
             </div>
           </q-menu>
         </q-btn>
@@ -49,7 +80,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 const linksList = [
   {
@@ -104,9 +135,9 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapState("store", ["incrementar", "diminuir", "adicionar"]),
+    ...mapState("store", ["contador", "itens"]),
+    ...mapGetters("store", ["quantidadeItensCarrinho"]),
   },
-
   setup() {
     const leftDrawerOpen = ref(false);
 

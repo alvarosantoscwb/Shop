@@ -25,13 +25,12 @@
       Produto indisponível
     </div>
     <q-btn
-      class="q-pa-sm q-pr-lg"
-      color="deep-orange"
-      style="align-itens: center; margin-top: 25px"
+      color="negative"
+      style="font-size: 12px"
       glossy
-      :@click="adicionarAoCarrinho"
       label="Adicionar ao carrinho"
-    />{{ adicionarAoCarrinho }}
+      @click="addCarrinho(item)"
+    />
   </div>
 </template>
 <script>
@@ -52,6 +51,7 @@ export default defineComponent({
       );
     },
     precoLabel() {
+      if (this.item.descontoValor) return "Por";
       if (!this.item.descontoPorCento) return "Preço";
       this.item.descontoPorCento;
       return "Por";
@@ -75,6 +75,11 @@ export default defineComponent({
       }
       // se não tiver desconto retorna valor original
       return this.item.preco;
+    },
+  },
+  methods: {
+    addCarrinho(item) {
+      this.$store.dispatch("store/adicionarAoCarrinho", item.id);
     },
   },
 });

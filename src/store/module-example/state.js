@@ -1,8 +1,11 @@
 export default function () {
   return {
-    incrementar: 0,
-    diminuir: -1,
+    contador: 0,
     carrinho: [
+      // {
+      //   id: "15888448"
+      //   qtde: 1
+      // }
     ],
     itens: [
       {
