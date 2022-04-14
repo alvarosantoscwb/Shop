@@ -20,15 +20,15 @@
               <div style="text-align: center; border-bottom: inset">
                 Carrinho de compras
                 <q-item
-                  v-for="item in carrinho"
+                  v-for="item in carrinhoDetalhado"
                   :key="item.id"
                   style="margin-left: -25px; border-bottom: inset"
                 >
-                  <img style="width: 60px" :src="item.img" />
+                  <img style="width: 45px" :src="item.img" />
                   <q-item-section class="ellipsis">{{
                     item.id
                   }}</q-item-section>
-                  <q-item-section>{{ quantidadeItensCarrinho }}</q-item-section>
+                  <q-item-section>{{ item.qtde }}</q-item-section>
                   <q-btn
                     flat
                     stretch
@@ -49,7 +49,7 @@
                     stretch
                     style="font-size: 10px"
                     icon="mdi-delete"
-                    @click="$store.dispatch('store/RemoverDoCarrinho')"
+                    @click="$store.dispatch('store/removerDoCarrinho')"
                   ></q-btn>
                 </q-item>
               </div>
@@ -135,8 +135,8 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapState("store", ["contador", "itens"]),
-    ...mapGetters("store", ["quantidadeItensCarrinho"]),
+    ...mapState("store", ["qtde"]),
+    ...mapGetters("store", ["quantidadeItensCarrinho", "carrinhoDetalhado"]),
   },
   setup() {
     const leftDrawerOpen = ref(false);

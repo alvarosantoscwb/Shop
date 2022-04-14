@@ -1,6 +1,5 @@
 export default function () {
   return {
-    contador: 0,
     carrinho: [
       // {
       //   id: "15888448"
