@@ -24,17 +24,21 @@
                   :key="item.id"
                   style="margin-left: -25px; border-bottom: inset"
                 >
-                  <img style="width: 45px" :src="item.img" />
-                  <q-item-section class="ellipsis">{{
-                    item.id
+                  <img style="width: 40px" :src="item.img" />
+                  <q-item-section class="ellipsis q-pa-xs">{{
+                    item.nome
                   }}</q-item-section>
-                  <q-item-section>{{ item.qtde }}</q-item-section>
+                  <q-item-section style="padding-left: 40px"
+                    >qtd: {{ item.qtde }}</q-item-section
+                  >
                   <q-btn
                     flat
                     stretch
                     style="font-size: 10px"
                     icon="mdi-minus"
-                    @click="$store.dispatch('store/diminuirNoCarrinho')"
+                    @click="
+                      $store.dispatch('store/diminuirNoCarrinho', item.id)
+                    "
                   >
                   </q-btn>
                   <q-btn
@@ -42,14 +46,16 @@
                     stretch
                     style="font-size: 10px"
                     icon="mdi-plus"
-                    @click="$store.dispatch('store/incrementarNoCarrinho')"
+                    @click="
+                      $store.dispatch('store/incrementarNoCarrinho', item.id)
+                    "
                   ></q-btn>
                   <q-btn
                     flat
                     stretch
                     style="font-size: 10px"
                     icon="mdi-delete"
-                    @click="$store.dispatch('store/removerDoCarrinho')"
+                    @click="$store.dispatch('store/removerDoCarrinho', item.id)"
                   ></q-btn>
                 </q-item>
               </div>

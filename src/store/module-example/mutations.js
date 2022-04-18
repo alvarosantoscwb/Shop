@@ -6,13 +6,14 @@ export function ADICIONAR_PRODUTO_CARRINHO(state, payload) {
     }
     // adicionar o objeto no carrinho
     state.carrinho.push(cartItem)
+
 }
 export function DIMINUIR_PRODUTO_CARRINHO(state, payload) {
     // procurar o produto no carrinho
     let existingItem = state.carrinho.find(produto => produto.id === payload)
     // se encontrar, diminuir a quantidade
     if (existingItem) {
-        state.carrinho.qtde--
+        existingItem.qtde--
     }
 }
 export function INCREMENTAR_PRODUTO_CARRINHO(state, payload) {
@@ -20,7 +21,7 @@ export function INCREMENTAR_PRODUTO_CARRINHO(state, payload) {
     let existingItens = state.carrinho.find(produto => produto.id === payload)
     // se encontrar, aumentar a quantidade
     if (existingItens) {
-        state.carrinho.qtde++
+        existingItens.qtde++
     }
 }
 export function REMOVER_PRODUTO_CARRINHO(state, payload) {
@@ -28,6 +29,6 @@ export function REMOVER_PRODUTO_CARRINHO(state, payload) {
     let existingItens = state.carrinho.find(produto => produto.id === payload)
     // se encontrar, remover do carrinho
     if (existingItens) {
-        state.carrinho.splice(existingItens)
+        state.carrinho.splice(payload.id)
     }
 }

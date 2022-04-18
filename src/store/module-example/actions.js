@@ -8,6 +8,7 @@ export function adicionarAoCarrinho({ commit, state }, payload) {
     commit('INCREMENTAR_PRODUTO_CARRINHO', payload)
   } else {
     // caso não exista, adiciona
+    (!existingItem)
     commit('ADICIONAR_PRODUTO_CARRINHO', payload)
   }
 }
@@ -17,17 +18,16 @@ export function diminuirNoCarrinho({ commit, state }, payload) {
   // verifica se já existe o produto no carrinho
   let existingItem = state.carrinho.find(produto => produto.id === payload)
   // caso exista, verifica se tem apenas um produto no carrinho
-  if (existingItem === 1) {
+  if (existingItem -= 1) {
     // caso seja verdadeiro, remove o produto completamen
     commit('REMOVER_PRODUTO_CARRINHO', payload)
-  }
-  // caso seja falso, diminui a quantidade em um
-  if (existingItem > 1) {
-    commit('DIMINUIR_PRODUTO_CARRINHO', payload)
+    // caso seja falso, diminui a quantidade em um
   } else {
-    // caso não exista não faz nada, operação inválida
-    return ""
+    existingItem
+    commit('DIMINUIR_PRODUTO_CARRINHO', payload)
   }
+  // caso não exista não faz nada, operação inválida
+  return ""
 }
 export function incrementarNoCarrinho({ commit, state }, payload) {
   // verifica se payload é um id de produto válido
