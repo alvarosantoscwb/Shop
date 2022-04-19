@@ -7,7 +7,7 @@ export function carrinhoDetalhado(state) {
     if (itemEncontrado) {
       carrinhoDetalhado.push({
         id: itemEncontrado.id,
-        img: itemEncontrado.img,
+        img: itemEncontrado.img ?? "https://m.media-amazon.com/images/I/41I-kHZbEaL._AC_UL320_.jpg",
         nome: itemEncontrado.nome,
         qtde: itemCarrinho.qtde,
       })

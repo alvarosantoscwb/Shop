@@ -18,12 +18,12 @@ export function diminuirNoCarrinho({ commit, state }, payload) {
   // verifica se já existe o produto no carrinho
   let existingItem = state.carrinho.find(produto => produto.id === payload)
   // caso exista, verifica se tem apenas um produto no carrinho
-  if (existingItem -= 1) {
-    // caso seja verdadeiro, remove o produto completamen
+  if (existingItem.qtde <= 1) {
+    // caso seja verdadeiro, remove o produto completamente
     commit('REMOVER_PRODUTO_CARRINHO', payload)
     // caso seja falso, diminui a quantidade em um
   } else {
-    existingItem
+    (existingItem.qtde > 1)
     commit('DIMINUIR_PRODUTO_CARRINHO', payload)
   }
   // caso não exista não faz nada, operação inválida

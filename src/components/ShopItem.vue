@@ -31,6 +31,13 @@
       label="Adicionar ao carrinho"
       @click="addCarrinho(item)"
     />
+    <q-btn
+      color="positive"
+      style="font-size: 12px; float: left; margin-left: 20px"
+      glossy
+      label="Comprar agora"
+      @click="addCarrinho(item)"
+    />
   </div>
 </template>
 <script>

@@ -29,6 +29,6 @@ export function REMOVER_PRODUTO_CARRINHO(state, payload) {
     let existingItens = state.carrinho.find(produto => produto.id === payload)
     // se encontrar, remover do carrinho
     if (existingItens) {
-        state.carrinho.splice(payload.id)
+        state.carrinho.splice(existingItens, 1)
     }
 }

@@ -16,49 +16,59 @@
             quantidadeItensCarrinho
           }}</q-badge>
           <q-menu>
-            <div class="bg-white q-pa-md" style="height: 400px; width: 400px">
-              <div style="text-align: center; border-bottom: inset">
+            <div class="bg-white q-pa-md" style="height: 600px; width: 450px">
+              <div
+                style="
+                  text-align: center;
+                  border-bottom: inset;
+                  font-weight: 500;
+                  font-family: monospace;
+                "
+              >
                 Carrinho de compras
-                <q-item
-                  v-for="item in carrinhoDetalhado"
-                  :key="item.id"
-                  style="margin-left: -25px; border-bottom: inset"
-                >
-                  <img style="width: 40px" :src="item.img" />
-                  <q-item-section class="ellipsis q-pa-xs">{{
-                    item.nome
-                  }}</q-item-section>
-                  <q-item-section style="padding-left: 40px"
-                    >qtd: {{ item.qtde }}</q-item-section
-                  >
-                  <q-btn
-                    flat
-                    stretch
-                    style="font-size: 10px"
-                    icon="mdi-minus"
-                    @click="
-                      $store.dispatch('store/diminuirNoCarrinho', item.id)
-                    "
-                  >
-                  </q-btn>
-                  <q-btn
-                    flat
-                    stretch
-                    style="font-size: 10px"
-                    icon="mdi-plus"
-                    @click="
-                      $store.dispatch('store/incrementarNoCarrinho', item.id)
-                    "
-                  ></q-btn>
-                  <q-btn
-                    flat
-                    stretch
-                    style="font-size: 10px"
-                    icon="mdi-delete"
-                    @click="$store.dispatch('store/removerDoCarrinho', item.id)"
-                  ></q-btn>
-                </q-item>
               </div>
+              <q-item
+                v-for="item in carrinhoDetalhado"
+                :key="item.id"
+                style="
+                  margin-left: -25px;
+                  border-bottom: inset;
+                  display: list-item;
+                  text-align: center;
+                "
+              >
+                <img class="item" style="width: 50px" :src="item.img" />
+                <q-item-section class="ellipsis q-pa-xs">{{
+                  item.nome
+                }}</q-item-section>
+                <q-item-section style="font-weight: 500"
+                  >qtd: {{ item.qtde }}</q-item-section
+                >
+                <q-btn
+                  flat
+                  stretch
+                  style="font-size: 10px"
+                  icon="mdi-minus"
+                  @click="$store.dispatch('store/diminuirNoCarrinho', item.id)"
+                >
+                </q-btn>
+                <q-btn
+                  flat
+                  stretch
+                  style="font-size: 10px"
+                  icon="mdi-plus"
+                  @click="
+                    $store.dispatch('store/incrementarNoCarrinho', item.id)
+                  "
+                ></q-btn>
+                <q-btn
+                  flat
+                  stretch
+                  style="font-size: 10px"
+                  icon="mdi-delete"
+                  @click="$store.dispatch('store/removerDoCarrinho', item.id)"
+                ></q-btn>
+              </q-item>
             </div>
           </q-menu>
         </q-btn>
@@ -86,7 +96,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
-import { mapGetters, mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 const linksList = [
   {
@@ -141,7 +151,6 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapState("store", ["qtde"]),
     ...mapGetters("store", ["quantidadeItensCarrinho", "carrinhoDetalhado"]),
   },
   setup() {
