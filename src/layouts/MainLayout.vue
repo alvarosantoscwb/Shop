@@ -13,7 +13,7 @@
         <q-space></q-space>
         <q-btn flat stretch icon="mdi-cart" style="margin-top: 5px" label="">
           <q-badge color="red" style="margin-bottom: 30px">{{
-            quantidadeItensCarrinho
+            itensCarrinho
           }}</q-badge>
           <q-menu>
             <div class="bg-white q-pa-md" style="height: 600px; width: 450px">
@@ -28,7 +28,7 @@
                 Carrinho de compras
               </div>
               <q-item
-                v-for="item in carrinhoDetalhado"
+                v-for="item in carrinhoDetail"
                 :key="item.id"
                 style="
                   margin-left: -25px;
@@ -36,7 +36,7 @@
                   display: list-item;
                   text-align: center;
                 "
-              >
+                >item.img
                 <img class="item" style="width: 50px" :src="item.img" />
                 <q-item-section class="ellipsis q-pa-xs">{{
                   item.nome
@@ -49,7 +49,7 @@
                   stretch
                   style="font-size: 10px"
                   icon="mdi-minus"
-                  @click="$store.dispatch('store/diminuirNoCarrinho', item.id)"
+                  @click="diminuirNoCarrinho, item.id"
                 >
                 </q-btn>
                 <q-btn
@@ -57,16 +57,14 @@
                   stretch
                   style="font-size: 10px"
                   icon="mdi-plus"
-                  @click="
-                    $store.dispatch('store/incrementarNoCarrinho', item.id)
-                  "
+                  @click="incrementarNoCarrinho, item.id"
                 ></q-btn>
                 <q-btn
                   flat
                   stretch
                   style="font-size: 10px"
                   icon="mdi-delete"
-                  @click="$store.dispatch('store/removerDoCarrinho', item.id)"
+                  @click="removerDoCarrinho, item.id"
                 ></q-btn>
               </q-item>
             </div>
@@ -74,95 +72,29 @@
         </q-btn>
       </q-toolbar>
     </q-header>
-
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
 
-<script>
-import { defineComponent, ref } from "vue";
-import EssentialLink from "components/EssentialLink.vue";
-import { mapGetters } from "vuex";
+<script setup>
+import { computed, ref } from "vue";
+import {
+  quantidadeItensCarrinho,
+  carrinhoDetalhado,
+} from "src/store/module-example/getters";
+import {
+  removerDoCarrinho,
+  incrementarNoCarrinho,
+  diminuirNoCarrinho,
+} from "src/store/module-example/actions";
 
-const linksList = [
-  {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev",
-  },
-  {
-    title: "Github",
-    caption: "github.com/quasarframework",
-    icon: "code",
-    link: "https://github.com/quasarframework",
-  },
-  {
-    title: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
-    icon: "chat",
-    link: "https://chat.quasar.dev",
-  },
-  {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
-  },
-  {
-    title: "Twitter",
-    caption: "@quasarframework",
-    icon: "rss_feed",
-    link: "https://twitter.quasar.dev",
-  },
-  {
-    title: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-    link: "https://facebook.quasar.dev",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
-    link: "https://awesome.quasar.dev",
-  },
-];
+const leftDrawerOpen = ref(false);
+const itensCarrinho = computed(() => quantidadeItensCarrinho.length);
+const carrinhoDetail = computed(() => carrinhoDetalhado);
 
-export default defineComponent({
-  name: "MainLayout",
-
-  components: {
-    EssentialLink,
-  },
-
-  computed: {
-    ...mapGetters("store", ["quantidadeItensCarrinho", "carrinhoDetalhado"]),
-  },
-  setup() {
-    const leftDrawerOpen = ref(false);
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
-    };
-  },
-});
+const toggleLeftDrawer = () => {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+};
 </script>
