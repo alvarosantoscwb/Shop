@@ -40,57 +40,50 @@
     />
   </div>
 </template>
-<script>
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "shopItem",
-  props: {
-    item: {
-      type: Object,
-    },
-  },
-  computed: {
-    imgItem() {
-      return (
-        this.item.img ??
-        "https://m.media-amazon.com/images/I/41I-kHZbEaL._AC_UL320_.jpg"
-      );
-    },
-    precoLabel() {
-      if (this.item.descontoValor) return "Por";
-      if (!this.item.descontoPorCento) return "Preço";
-      this.item.descontoPorCento;
-      return "Por";
-    },
-    precoOriginal() {
-      // se tiver desconto retorna valor original
-      if (this.item.descontoPorCento || this.item.descontoValor) {
-        return this.item.preco;
-      }
-      // se não tiver desconto retorna nada
-      return "";
-    },
-    precoCalculado() {
-      // se tiver desconto por cento calcular porcentagem
-      if (this.item.descontoPorCento) {
-        return Math.round(this.item.descontoPorCento * this.item.preco) / 100;
-      }
-      // se tiver descontoValor retorna
-      if (this.item.descontoValor) {
-        return this.item.descontoValor;
-      }
-      // se não tiver desconto retorna valor original
-      return this.item.preco;
-    },
-  },
-  methods: {
-    addCarrinho(item) {
-      this.$store.dispatch("store/adicionarAoCarrinho", item.id);
-    },
+<script setup>
+import { adicionarAoCarrinho } from "src/store/showcase/actions";
+import { computed, defineProps } from "vue";
+const props = defineProps({
+  item: {
+    type: Object,
   },
 });
+const imgItem = computed(() => {
+  return (
+    props.item.img ??
+    "https://m.media-amazon.com/images/I/41I-kHZbEaL._AC_UL320_.jpg"
+  );
+});
+const precoLabel = computed(() => {
+  if (props.item.descontoValor) return "Por";
+  if (!props.item.descontoPorCento) return "Preço";
+  props.item.descontoPorCento;
+  return "Por";
+});
+const precoOriginal = computed(() => {
+  // se tiver desconto retorna valor original
+  if (props.item.descontoPorCento || props.item.descontoValor) {
+    return props.item.preco;
+  }
+  // se não tiver desconto retorna nada
+  return "";
+});
+const precoCalculado = computed(() => {
+  // se tiver desconto por cento calcular porcentagem
+  if (props.item.descontoPorCento) {
+    return Math.round(props.item.descontoPorCento * props.item.preco) / 100;
+  }
+  // se tiver descontoValor retorna
+  if (props.item.descontoValor) {
+    return props.item.descontoValor;
+  }
+  // se não tiver desconto retorna valor original
+  return props.item.preco;
+});
+
+const addCarrinho = () => {
+  adicionarAoCarrinho();
+};
 </script>
 
-<style>
-</style>
+<style></style>
