@@ -28,7 +28,7 @@
                 Carrinho de compras
               </div>
               <q-item
-                v-for="item in carrinhoDetail"
+                v-for="item of carrinhoDetail"
                 :key="item.id"
                 style="
                   margin-left: -25px;
@@ -36,7 +36,7 @@
                   display: list-item;
                   text-align: center;
                 "
-                >item.img
+                >{{ item }}
                 <img class="item" style="width: 50px" :src="item.img" />
                 <q-item-section class="ellipsis q-pa-xs">{{
                   item.nome
@@ -83,12 +83,12 @@ import { computed, ref } from "vue";
 import {
   quantidadeItensCarrinho,
   carrinhoDetalhado,
-} from "src/store/module-example/getters";
+} from "src/store/showcase/getters";
 import {
   removerDoCarrinho,
   incrementarNoCarrinho,
   diminuirNoCarrinho,
-} from "src/store/module-example/actions";
+} from "src/store/showcase/actions";
 
 const leftDrawerOpen = ref(false);
 const itensCarrinho = computed(() => quantidadeItensCarrinho.length);
