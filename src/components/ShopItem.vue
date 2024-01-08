@@ -43,6 +43,10 @@
 <script setup>
 import { adicionarAoCarrinho } from "src/store/showcase/actions";
 import { computed, defineProps } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
 const props = defineProps({
   item: {
     type: Object,
@@ -81,8 +85,8 @@ const precoCalculado = computed(() => {
   return props.item.preco;
 });
 
-const addCarrinho = () => {
-  adicionarAoCarrinho();
+const addCarrinho = (item) => {
+  store.dispatch("showcase/adicionarAoCarrinho", item.id);
 };
 </script>
 

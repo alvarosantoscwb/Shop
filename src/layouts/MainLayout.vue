@@ -28,7 +28,7 @@
                 Carrinho de compras
               </div>
               <q-item
-                v-for="item of carrinhoDetail"
+                v-for="item in carrinhoDetail"
                 :key="item.id"
                 style="
                   margin-left: -25px;
@@ -36,7 +36,7 @@
                   display: list-item;
                   text-align: center;
                 "
-                >{{ item }}
+              >
                 <img class="item" style="width: 50px" :src="item.img" />
                 <q-item-section class="ellipsis q-pa-xs">{{
                   item.nome
@@ -49,7 +49,9 @@
                   stretch
                   style="font-size: 10px"
                   icon="mdi-minus"
-                  @click="diminuirNoCarrinho, item.id"
+                  @click="
+                    store.dispatch('showcase/diminuirNoCarrinho', item.id)
+                  "
                 >
                 </q-btn>
                 <q-btn
@@ -57,14 +59,16 @@
                   stretch
                   style="font-size: 10px"
                   icon="mdi-plus"
-                  @click="incrementarNoCarrinho, item.id"
+                  @click="
+                    store.dispatch('showcase/incrementarNoCarrinho', item.id)
+                  "
                 ></q-btn>
                 <q-btn
                   flat
                   stretch
                   style="font-size: 10px"
                   icon="mdi-delete"
-                  @click="removerDoCarrinho, item.id"
+                  @click="store.dispatch('showcase/removerDoCarrinho', item.id)"
                 ></q-btn>
               </q-item>
             </div>
@@ -80,19 +84,17 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import {
-  quantidadeItensCarrinho,
-  carrinhoDetalhado,
-} from "src/store/showcase/getters";
-import {
-  removerDoCarrinho,
-  incrementarNoCarrinho,
-  diminuirNoCarrinho,
-} from "src/store/showcase/actions";
+import { useStore } from "vuex";
 
+const store = useStore();
 const leftDrawerOpen = ref(false);
-const itensCarrinho = computed(() => quantidadeItensCarrinho.length);
-const carrinhoDetail = computed(() => carrinhoDetalhado);
+const itensCarrinho = computed(
+  () => store.getters["showcase/quantidadeItensCarrinho"]
+);
+
+const carrinhoDetail = computed(
+  () => store.getters["showcase/carrinhoDetalhado"]
+);
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
