@@ -1,47 +1,45 @@
 <template>
   <div
-    class="bg-white shadow-2 q-pl-xs q-pb-lg"
+    class="shadow-3 q-pl-xs q-pb-lg"
     style="text-align: center; width: 365px"
   >
-    <img style="height: 250px" :src="imgItem" />
+    <img class="q-pt-md" style="height: 150px" :src="imgItem" />
     <div style="text-align: start; font-size: 20px" class="ellipsis q-pa-xs">
       {{ item.nome }}
     </div>
+    <div v-if="precoOriginal">De: R${{ precoOriginal }}</div>
     <div
-      v-if="precoOriginal"
-      style="
-        text-align: left;
-        text-decoration: line-through;
-        color: grey;
-        padding-left: 5px;
-      "
+      v-if="precoCalculado"
+      :style="precoLabel === 'Preço' ? 'padding-bottom: 21px' : ''"
     >
-      De: R${{ precoOriginal }}
-    </div>
-    <div v-if="precoCalculado" style="text-align: left; padding-left: 5px">
       {{ precoLabel }}: R${{ precoCalculado }}
     </div>
-    <div v-else style="text-align: left; padding-left: 5px">
+    <div
+      class="q-pl-sm text-center text-grey-9"
+      style="padding-bottom: 21px"
+      v-else
+    >
       Produto indisponível
     </div>
-    <q-btn
-      color="negative"
-      style="font-size: 12px"
-      glossy
-      label="Adicionar ao carrinho"
-      @click="addCarrinho(item)"
-    />
-    <q-btn
-      color="positive"
-      style="font-size: 12px; float: left; margin-left: 20px"
-      glossy
-      label="Comprar agora"
-      @click="addCarrinho(item)"
-    />
+    <div class="q-gutter-sm">
+      <q-btn
+        color="positive"
+        glossy
+        label="Comprar agora"
+        @click="addCarrinho(item)"
+        :disable="!precoCalculado"
+      />
+      <q-btn
+        color="negative"
+        glossy
+        label="Adicionar ao carrinho"
+        @click="addCarrinho(item)"
+        :disable="!precoCalculado"
+      />
+    </div>
   </div>
 </template>
 <script setup>
-import { adicionarAoCarrinho } from "src/store/showcase/actions";
 import { computed, defineProps } from "vue";
 import { useStore } from "vuex";
 
