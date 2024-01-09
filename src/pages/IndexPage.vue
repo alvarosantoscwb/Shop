@@ -8,7 +8,7 @@
           display: flex;
           margin-top: -50px;
           flex-wrap: wrap;
-          flex: flex-center;
+          align-items: center;
         "
       >
         <ShopItem v-for="item in itens" :key="item.id" :item="item" />

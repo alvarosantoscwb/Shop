@@ -2,22 +2,23 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
         <q-space></q-space>
-        <q-btn flat stretch icon="mdi-cart" style="margin-top: 5px" label="">
-          <q-badge color="red" style="margin-bottom: 30px">{{
+        <q-icon name="mdi-cart cursor-pointer q-pr-md" size="25px">
+          <q-badge color="red" style="margin-bottom: 25px">{{
             itensCarrinho
           }}</q-badge>
           <q-menu>
-            <div class="bg-white q-pa-md" style="height: 600px; width: 450px">
+            <div
+              class="bg-white q-pa-md"
+              style="
+                height: 600px;
+                width: 400px;
+                border-radius: 12px;
+                overflow-x: hidden;
+              "
+            >
               <div
+                class="q-pb-md"
                 style="
                   text-align: center;
                   border-bottom: inset;
@@ -41,39 +42,46 @@
                 <q-item-section class="ellipsis q-pa-xs">{{
                   item.nome
                 }}</q-item-section>
-                <q-item-section style="font-weight: 500"
-                  >qtd: {{ item.qtde }}</q-item-section
+                <q-item-section class="q-pb-md" style="font-weight: 500"
+                  >quantidade: {{ item.qtde }}</q-item-section
                 >
-                <q-btn
-                  flat
-                  stretch
-                  style="font-size: 10px"
-                  icon="mdi-minus"
-                  @click="
-                    store.dispatch('showcase/diminuirNoCarrinho', item.id)
-                  "
-                >
-                </q-btn>
-                <q-btn
-                  flat
-                  stretch
-                  style="font-size: 10px"
-                  icon="mdi-plus"
-                  @click="
-                    store.dispatch('showcase/incrementarNoCarrinho', item.id)
-                  "
-                ></q-btn>
-                <q-btn
-                  flat
-                  stretch
-                  style="font-size: 10px"
-                  icon="mdi-delete"
-                  @click="store.dispatch('showcase/removerDoCarrinho', item.id)"
-                ></q-btn>
+                <div class="q-gutter-md">
+                  <q-btn
+                    flat
+                    stretch
+                    style="font-size: 10px"
+                    icon="mdi-minus"
+                    round
+                    @click="
+                      store.dispatch('showcase/diminuirNoCarrinho', item.id)
+                    "
+                  >
+                  </q-btn>
+                  <q-btn
+                    flat
+                    stretch
+                    round
+                    style="font-size: 10px"
+                    icon="mdi-plus"
+                    @click="
+                      store.dispatch('showcase/incrementarNoCarrinho', item.id)
+                    "
+                  ></q-btn>
+                  <q-btn
+                    flat
+                    stretch
+                    round
+                    style="font-size: 10px"
+                    icon="mdi-delete"
+                    @click="
+                      store.dispatch('showcase/removerDoCarrinho', item.id)
+                    "
+                  ></q-btn>
+                </div>
               </q-item>
             </div>
           </q-menu>
-        </q-btn>
+        </q-icon>
       </q-toolbar>
     </q-header>
     <q-page-container>
@@ -100,3 +108,8 @@ const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 };
 </script>
+<style>
+.q-position-engi {
+  overflow-x: hidden;
+}
+</style>

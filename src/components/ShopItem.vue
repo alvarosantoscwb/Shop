@@ -1,13 +1,15 @@
 <template>
   <div
     class="shadow-3 q-pl-xs q-pb-lg"
-    style="text-align: center; width: 365px"
+    style="text-align: center; width: 365px; border-radius: 12px"
   >
     <img class="q-pt-md" style="height: 150px" :src="imgItem" />
     <div style="text-align: start; font-size: 20px" class="ellipsis q-pa-xs">
       {{ item.nome }}
     </div>
-    <div v-if="precoOriginal">De: R${{ precoOriginal }}</div>
+    <div v-if="precoOriginal" class="text-strike">
+      De: R${{ precoOriginal }}
+    </div>
     <div
       v-if="precoCalculado"
       :style="precoLabel === 'Preço' ? 'padding-bottom: 21px' : ''"
